@@ -59,6 +59,7 @@ add_clang_library(clangStaticAnalyzerCheckers
   IvarInvalidationChecker.cpp
   LLVMConventionsChecker.cpp
   LocalizationChecker.cpp
+  LossOfSignChecker.cpp
   MacOSKeychainAPIChecker.cpp
   MacOSXAPIChecker.cpp
   MallocChecker.cpp

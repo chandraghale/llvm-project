@@ -237,6 +237,10 @@ def NonnullGlobalConstantsChecker: Checker<"NonnilStringConstants">,
   Documentation<NotDocumented>,
   Hidden;
 
+def LossOfSignChecker : Checker<"LossOfSignAssign">,
+  HelpText<"Warn about (possible) loss of sign in assignments and initializations">,
+  Documentation<HasDocumentation>;
+
 } // end "core"
 
 let ParentPackage = CoreAlpha in {
