@@ -71,6 +71,31 @@ void LossOfSignChecker::checkBind(SVal loc, SVal val, const Stmt *S,
     return;
 
   QualType valTy = TR->getValueType();
+  if (valTy->isArrayType()) {
+    valTy = valTy->castAsArrayTypeUnsafe()->getElementType();
+    if (!isPlainCharType(valTy))
+      return;
+    if (const DeclStmt *DS = dyn_cast<DeclStmt>(S)) {
+      const Expr *Ex = nullptr;
+      const VarDecl *VD = cast<VarDecl>(DS->getSingleDecl());
+      Ex = VD->getInit();
+      if (const InitListExpr *IE = dyn_cast<InitListExpr>(Ex)) {
+
+        for (const Stmt *S : llvm::reverse(*IE)) {
+          if (const auto *CE = dyn_cast<Expr>((S))) {
+            CE = CE->IgnoreImplicit();
+            // Emit warning for negative numbers
+            if (const auto *UO = dyn_cast<UnaryOperator>(CE)) {
+              if (UO->getOpcode() == UO_Minus) {
+                ProgramStateRef state = C.getState();
+                emitReport(state, C);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   // Get the value of the right-hand side.  We only care about values
   // that are defined (UnknownVals and UndefinedVals are handled by other
