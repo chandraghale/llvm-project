@@ -10,8 +10,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-def : Enum {
-  let name = "ol_alloc_type_t";
+def ol_alloc_type_t : Enum {
   let desc = "Represents the type of allocation made with olMemAlloc.";
   let etors = [
     Etor<"HOST", "Host allocation">,
@@ -20,8 +19,7 @@ def : Enum {
   ];
 }
 
-def : Function {
-  let name = "olMemAlloc";
+def olMemAlloc : Function {
   let desc = "Creates a memory allocation on the specified device.";
   let params = [
     Param<"ol_device_handle_t", "Device", "handle of the device to allocate on", PARAM_IN>,
@@ -36,8 +34,7 @@ def : Function {
   ];
 }
 
-def : Function {
-  let name = "olMemFree";
+def olMemFree : Function {
   let desc = "Frees a memory allocation previously made by olMemAlloc.";
   let params = [
     Param<"void*", "Address", "address of the allocation to free", PARAM_IN>,
@@ -45,8 +42,7 @@ def : Function {
   let returns = [];
 }
 
-def : Function {
-    let name = "olMemcpy";
+def olMemcpy : Function {
     let desc = "Enqueue a memcpy operation.";
     let details = [
         "For host pointers, use the host device belonging to the OL_PLATFORM_BACKEND_HOST platform.",
@@ -60,9 +56,6 @@ def : Function {
         Param<"const void*", "SrcPtr", "pointer to copy from", PARAM_IN>,
         Param<"ol_device_handle_t", "SrcDevice", "device that SrcPtr belongs to", PARAM_IN>,
         Param<"size_t", "Size", "size in bytes of data to copy", PARAM_IN>,
-        Param<"ol_event_handle_t*", "EventOut", "optional recorded event for the enqueued operation", PARAM_OUT_OPTIONAL>
     ];
-    let returns = [
-        Return<"OL_ERRC_INVALID_ARGUMENT", ["`Queue == NULL && EventOut != NULL`"]>
-    ];
+    let returns = [];
 }
