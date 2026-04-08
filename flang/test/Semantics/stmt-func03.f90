@@ -2,11 +2,6 @@
 ! CHECK-NOT: error:
 ! CHECK-NOT: Internal:
 program main
-  integer :: passed, failed
-  passed = 0
-  failed = 0
-  call internal_sub()
-  call exit(failed)
 contains
   subroutine internal_sub()
     integer :: i, result
@@ -15,11 +10,6 @@ contains
     stmt_function(i) = i * 2
     i = 1
     result = stmt_function(i)
-    if (result .eq. 2) then
-      passed = passed + 1
-    else
-      failed = failed + 1
-    end if
   end subroutine internal_sub
   integer function stmt_function(arg)
     integer :: arg
