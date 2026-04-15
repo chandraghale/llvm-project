@@ -4659,7 +4659,7 @@ bool SubprogramVisitor::HandleStmtFunction(const parser::StmtFunctionStmt &x) {
       MakeSymbol(name, Attrs{}, UnknownDetails{});
       // 'name' may still point to a host-associated SubprogramNameDetails
       // symbol. Reset it so statement-function processing
-      //  re-resolves to the new local SubprogramDetails.
+      // re-resolves to the new local SubprogramDetails.
       name.symbol = nullptr;
     } else if (auto *entity{ultimate.detailsIf<EntityDetails>()};
                entity && !ultimate.has<ProcEntityDetails>()) {
